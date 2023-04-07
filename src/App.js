@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import AsciiFrame from './MyComponent';
 
 function App() {
+  const [price, setprice] = useState('loading...');
+
+  useEffect(() => {
+    fetch('/price')
+      .then(response => response.json())
+      .then(data => setprice(data.price))
+      .catch(error => console.log(error));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <AsciiFrame>
+          <h1>FTSE 100 Price is:</h1>
+          <p>{price}</p>
+        </AsciiFrame>
     </div>
   );
 }
